@@ -57,6 +57,7 @@ public class BowSequence
 
     public void SequenceEnd()
     {
-        
+        int damage = 10 * successCount;
+        BattleManager.Main.DamageToHero(damage);
     }
 }

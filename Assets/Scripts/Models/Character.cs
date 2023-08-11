@@ -4,6 +4,12 @@ public class Character
     private int health;
     private int maxHealth;
 
+    public Character(int maxHealth)
+    {
+        this.health = maxHealth;
+        this.maxHealth = maxHealth;
+    }
+
     /// <summary>
     /// Change the health of the character (healing / damages)
     /// </summary>
@@ -17,5 +23,15 @@ public class Character
         if(health < 0)
             return false;
         return true;
+    }
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
     }
 }
