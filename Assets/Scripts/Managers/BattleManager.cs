@@ -11,9 +11,13 @@ public class BattleManager : MonoBehaviour
     public GameObject PunchAttackPrefab;
 
     public GameObject BattleZone;
-    public GameObject HeroHealthBar;
-    public GameObject HeroDamageBar;
+
+    public RectTransform HeroHealthBar;
+    public DamageBarBehaviour HeroDamageBar;
     public TextMeshProUGUI HeroHealthText;
+    public RectTransform EnemyHealthBar;
+    public DamageBarBehaviour EnemyDamageBar;
+    public TextMeshProUGUI EnemyHealthText;
 
     public Character Hero;
     public Character Enemy;
@@ -27,12 +31,14 @@ public class BattleManager : MonoBehaviour
         Main = this;
 
         Hero = new Character(100);
+        Enemy = new Character(90);
 
         ScreenWidth = BattleZone.GetComponent<RectTransform>().rect.width;
         ScreenHeight = BattleZone.GetComponent<RectTransform>().rect.height;
 
         UpdateHeroBar(0);
-        
+        UpdateEnemyBar(0);
+
         Attack();
     }
 
@@ -57,14 +63,34 @@ public class BattleManager : MonoBehaviour
         // TODO: damage text
     }
 
+    public void DamageToEnemy(int damage)
+    {
+        bool isAlive = Enemy.changeHealth(0 - damage);
+
+        UpdateEnemyBar(damage);
+
+        // TODO: damage text
+    }
+
     public void UpdateHeroBar(int damage)
     {
-        float healthRatio = Hero.GetHealth() / Hero.GetMaxHealth();
-        float damageRatio = damage / Hero.GetMaxHealth();
-        HeroHealthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(ScreenWidth * healthRatio, 100);
-        HeroDamageBar.GetComponent<RectTransform>().sizeDelta = new Vector2(ScreenWidth * damageRatio, 100);
+        float healthWidth = (float)Hero.GetHealth() / Hero.GetMaxHealth() * ScreenWidth;
+        float damageWidth = (float)damage / Hero.GetMaxHealth() * ScreenWidth;
+        HeroHealthBar.sizeDelta = new Vector2(healthWidth, 100);
+        HeroDamageBar.SetWidth(damageWidth);
 
         HeroHealthText.text = string.Format("{0} / {1}", Hero.GetHealth(), Hero.GetMaxHealth());
+
+    }
+
+    public void UpdateEnemyBar(int damage)
+    {
+        float healthWidth = (float)Enemy.GetHealth() / Enemy.GetMaxHealth() * ScreenWidth;
+        float damageWidth = (float)damage / Enemy.GetMaxHealth() * ScreenWidth;
+        EnemyHealthBar.sizeDelta = new Vector2(healthWidth, 100);
+        EnemyDamageBar.SetWidth(damageWidth);
+
+        EnemyHealthText.text = string.Format("{0} / {1}", Enemy.GetHealth(), Enemy.GetMaxHealth());
 
     }
 }

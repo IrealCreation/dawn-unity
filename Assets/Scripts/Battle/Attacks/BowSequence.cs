@@ -41,7 +41,6 @@ public class BowSequence
         
         GameObject bowAttack = GameObject.Instantiate(BowAttackPrefab, BattleManager.Main.BattleZone.transform);
         bowAttack.GetComponent<BowAttack>().Init(this, posX, posY, computedSize, computedDuration);
-        
     }
 
     public void AttackEnd(bool success)
@@ -58,6 +57,6 @@ public class BowSequence
     public void SequenceEnd()
     {
         int damage = 10 * successCount;
-        BattleManager.Main.DamageToHero(damage);
+        BattleManager.Main.DamageToEnemy(damage);
     }
 }
