@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class DamageBarBehaviour : MonoBehaviour
 {
-    private RectTransform rectTransform;
+    public RectTransform RectTransform;
     private float cooldown = 0f;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.rectTransform = this.gameObject.GetComponent<RectTransform>();
-    }
 
     // Update is called once per frame
     void Update()
@@ -20,16 +14,16 @@ public class DamageBarBehaviour : MonoBehaviour
         {
             cooldown -= Time.deltaTime;
         }
-        else if(rectTransform.rect.width > 0)
+        else if(RectTransform.rect.width > 0)
         {
-            float width = rectTransform.rect.width - Time.deltaTime * 200;
-            rectTransform.sizeDelta = new Vector2(width, 0);
+            float width = RectTransform.rect.width - Time.deltaTime * 200;
+            RectTransform.sizeDelta = new Vector2(width, 0);
         }
     }
 
     public void SetWidth(float width)
     {
-        rectTransform.sizeDelta = new Vector2(width, 0);
+        RectTransform.sizeDelta = new Vector2(width, 0);
         cooldown = 1f;
     }
 }

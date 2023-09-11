@@ -9,6 +9,7 @@ public class BattleManager : MonoBehaviour
 
     public GameObject BowAttackPrefab;
     public GameObject PunchAttackPrefab;
+    public GameObject DamageTextPrefab;
 
     public GameObject BattleZone;
 
@@ -60,7 +61,8 @@ public class BattleManager : MonoBehaviour
 
         UpdateHeroBar(damage);
 
-        // TODO: damage text
+        GameObject damageText = Instantiate(DamageTextPrefab, HeroHealthBar);
+        damageText.GetComponent<DamageTextBehaviour>().SetDamage(damage, true);
     }
 
     public void DamageToEnemy(int damage)
@@ -68,6 +70,11 @@ public class BattleManager : MonoBehaviour
         bool isAlive = Enemy.changeHealth(0 - damage);
 
         UpdateEnemyBar(damage);
+
+        GameObject damageText = Instantiate(DamageTextPrefab, EnemyHealthBar);
+        damageText.GetComponent<DamageTextBehaviour>().SetDamage(damage, false);
+        
+        DamageToHero(22);
 
         // TODO: damage text
     }
